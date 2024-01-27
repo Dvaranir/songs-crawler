@@ -1,0 +1,46 @@
+appdirs @ file:///home/conda/feedstock_root/build_artifacts/appdirs_1603108395799/work
+attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1704011227531/work
+Automat @ file:///home/conda/feedstock_root/build_artifacts/automat_1667331175863/work
+bcrypt @ file:///D:/bld/bcrypt_1702664014679/work
+Brotli @ file:///D:/bld/brotli-split_1695989908365/work
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1700303426725/work/certifi
+cffi @ file:///D:/bld/cffi_1696001770413/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1698833585322/work
+constantly==15.1.0
+cryptography @ file:///D:/bld/cryptography-split_1701563398088/work
+cssselect @ file:///home/conda/feedstock_root/build_artifacts/cssselect_1666980406338/work
+filelock @ file:///home/conda/feedstock_root/build_artifacts/filelock_1698714947081/work
+greenlet==3.0.3
+hyperlink @ file:///home/conda/feedstock_root/build_artifacts/hyperlink_1610092164190/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1701026962277/work
+incremental @ file:///home/conda/feedstock_root/build_artifacts/incremental_1665859450441/work
+itemadapter @ file:///home/conda/feedstock_root/build_artifacts/itemadapter_1680243523209/work
+itemloaders @ file:///home/conda/feedstock_root/build_artifacts/itemloaders_1682077230392/work
+jmespath @ file:///home/conda/feedstock_root/build_artifacts/jmespath_1655568249366/work
+lxml==5.1.0
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1696202382185/work
+parsel @ file:///home/conda/feedstock_root/build_artifacts/parsel_1681832224042/work
+playwright==1.41.1
+Protego @ file:///home/conda/feedstock_root/build_artifacts/protego_1691646180231/work
+pyasn1 @ file:///home/conda/feedstock_root/build_artifacts/pyasn1_1701287008248/work
+pyasn1-modules @ file:///home/conda/feedstock_root/build_artifacts/pyasn1-modules_1695107857548/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
+PyDispatcher==2.0.5
+pyee==11.0.1
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1698795453264/work
+PySocks @ file:///D:/bld/pysocks_1661604991356/work
+pywin32==306
+queuelib @ file:///home/conda/feedstock_root/build_artifacts/queuelib_1629994290383/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1684774241324/work
+requests-file @ file:///home/conda/feedstock_root/build_artifacts/requests-file_1591227832914/work
+Scrapy @ file:///D:/bld/scrapy_1695139090887/work
+service-identity @ file:///home/conda/feedstock_root/build_artifacts/service-identity-build_1700936484042/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+tldextract @ file:///home/conda/feedstock_root/build_artifacts/tldextract_1700220400295/work
+Twisted @ file:///D:/bld/twisted_1667305603717/work
+twisted-iocpsupport @ file:///D:/bld/twisted-iocpsupport_1695469048038/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1702176139754/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1699933488691/work
+w3lib @ file:///home/conda/feedstock_root/build_artifacts/w3lib_1691236459676/work
+win-inet-pton @ file:///D:/bld/win_inet_pton_1667051142467/work
+zope.interface @ file:///D:/bld/zope.interface_1696523635899/work
