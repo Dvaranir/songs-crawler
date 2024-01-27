@@ -1,5 +1,5 @@
 import sqlite3
-
+import re
 from playwright.sync_api import sync_playwright
 
 
@@ -11,7 +11,6 @@ class PlaywrightController:
             '--enable-gpu',
             '--no-sandbox',
             '--ignore-gpu-blocklist',
-
         ]
 
         self.db_cursor_init()
@@ -34,7 +33,7 @@ class PlaywrightController:
 
     def get_undownloaded_tracks(self):
         self.cursor.execute(
-            "SELECT * FROM tracks WHERE downloaded_path IS NULL")
+            "SELECT * FROM tracks WHERE downloaded_path IS NULL AND download_url IS NOT NULL")
         rows = self.cursor.fetchall()
         self.tracks = [dict(row) for row in rows]
 
@@ -51,27 +50,40 @@ class PlaywrightController:
         with sync_playwright() as pw:
             self.start_session(pw)
             for track in self.tracks:
+                if not track['download_url']:
+                    continue
+                
                 self.page.goto(track['download_url'], timeout=0)
                 self.page.wait_for_load_state('networkidle')
                 button = self.page.get_by_text("Скачать")
 
                 if (button):
-                    with self.page.expect_download() as download_info:
+                    with self.page.expect_download(timeout=120000) as download_info:
                         button.click()
 
                 download = download_info.value
-                download.save_as(f"./downloads/{download.suggested_filename}")
+                extension = download.suggested_filename.split('.')[-1]
+                filename = f"{track['init_artist']} - {track['init_name']}.{extension}"
+                filename = self.sanitize_filename(filename)
+                download.save_as(f"./downloads/{filename}")
+
                 if not download.failure():
                     self.cursor.execute("""
                         UPDATE tracks
                         SET downloaded_path = ?
                         WHERE id = ?
-                    """, (download.path, track['id']))
+                    """, (str(download.path()), track['id']))
                     self.conn.commit()
+                    print(f"Downloaded {track['init_artist']} - {track['init_name']}")
 
     def go_to_next_track(self):
         print(f"Fetching {self.url}")
         self.page.goto(self.url, timeout=0)
+
+    def sanitize_filename(self, filename):
+        filename = re.sub(r'[\\/*?:"<>|]', "", filename)
+        filename = filename.replace(' ', '_')
+        return filename
 
 
 PlaywrightController()
