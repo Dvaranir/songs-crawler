@@ -41,7 +41,6 @@ class RuMusicCom(scrapy.Spider):
                 }
 
                 urls += [search_url]
-                break
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.search, meta={'url': url}, dont_filter=True)

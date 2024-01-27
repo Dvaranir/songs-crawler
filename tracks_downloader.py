@@ -4,6 +4,7 @@ from playwright.sync_api import sync_playwright
 
 
 class PlaywrightController:
+    TIMEOUT = 120000
 
     def __init__(self):
         self.chrome_args = [
@@ -53,17 +54,24 @@ class PlaywrightController:
 
                 if not track['download_url']:
                     continue
+
+                try:
+                    self.download_track(track)
+                except Exception as e:
+                    print(e)
+                    continue
+                finally:
+                    self.close_excess_pages()
                 
-                self.download_track(track)
-                self.close_excess_pages()
+                
 
     def download_track(self, track):
-        self.page.goto(track['download_url'], timeout=0)
+        self.page.goto(track['download_url'], timeout=self.TIMEOUT)
         self.page.wait_for_load_state('networkidle')
         button = self.page.get_by_text("Скачать")
 
         if (button):
-            with self.page.expect_download(timeout=120000) as download_info:
+            with self.page.expect_download(timeout=self.TIMEOUT) as download_info:
                 button.click()
 
         download = download_info.value
