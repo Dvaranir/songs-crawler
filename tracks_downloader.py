@@ -50,31 +50,43 @@ class PlaywrightController:
         with sync_playwright() as pw:
             self.start_session(pw)
             for track in self.tracks:
+
                 if not track['download_url']:
                     continue
                 
-                self.page.goto(track['download_url'], timeout=0)
-                self.page.wait_for_load_state('networkidle')
-                button = self.page.get_by_text("Скачать")
+                self.download_track(track)
+                self.close_excess_pages()
 
-                if (button):
-                    with self.page.expect_download(timeout=120000) as download_info:
-                        button.click()
+    def download_track(self, track):
+        self.page.goto(track['download_url'], timeout=0)
+        self.page.wait_for_load_state('networkidle')
+        button = self.page.get_by_text("Скачать")
 
-                download = download_info.value
-                extension = download.suggested_filename.split('.')[-1]
-                filename = f"{track['init_artist']} - {track['init_name']}.{extension}"
-                filename = self.sanitize_filename(filename)
-                download.save_as(f"./downloads/{filename}")
+        if (button):
+            with self.page.expect_download(timeout=120000) as download_info:
+                button.click()
 
-                if not download.failure():
-                    self.cursor.execute("""
-                        UPDATE tracks
-                        SET downloaded_path = ?
-                        WHERE id = ?
-                    """, (str(download.path()), track['id']))
-                    self.conn.commit()
-                    print(f"Downloaded {track['init_artist']} - {track['init_name']}")
+        download = download_info.value
+        extension = download.suggested_filename.split('.')[-1]
+        filename = f"{track['init_artist']} - {track['init_name']}.{extension}"
+        filename = self.sanitize_filename(filename)
+        download.save_as(f"./downloads/{filename}")
+
+        if not download.failure():
+            self.cursor.execute("""
+                UPDATE tracks
+                SET downloaded_path = ?
+                WHERE id = ?
+            """, (str(download.path()), track['id']))
+            self.conn.commit()
+            print(f"Downloaded {track['init_artist']} - {track['init_name']}")
+                
+    def close_excess_pages(self):
+        page_count = 1
+        for page in self.page.context.pages:
+            if page_count > 1:
+                page.close()
+            page_count += 1
 
     def go_to_next_track(self):
         print(f"Fetching {self.url}")
