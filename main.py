@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 
 
 class PlaywrightController:
-    TIMEOUT = 120000
+    TIMEOUT = 240000
 
     def __init__(self):
         self.chrome_args = [
