@@ -42,7 +42,7 @@ class PlaywrightController:
         self.browser = pw.chromium.launch(headless=True,
                                           args=self.chrome_args,
                                           executable_path='E:\Programs\Development\PlaywrightBrowsers\chromium-1060\chrome-win\chrome.exe',
-                                          timeout=0)
+                                          timeout=self.TIMEOUT)
 
         self.page = self.browser.new_page()
         self.page.set_viewport_size({'width': 1920, 'height': 1080})
@@ -98,7 +98,7 @@ class PlaywrightController:
 
     def go_to_next_track(self):
         print(f"Fetching {self.url}")
-        self.page.goto(self.url, timeout=0)
+        self.page.goto(self.url, timeout=self.TIMEOUT)
 
     def sanitize_filename(self, filename):
         filename = re.sub(r'[\\/*?:"<>|]', "", filename)
