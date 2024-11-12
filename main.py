@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 
 
 class PlaywrightController:
-    TIMEOUT = 240000
+    TIMEOUT = 800000
 
     def __init__(self):
         self.chrome_args = [
@@ -41,7 +41,7 @@ class PlaywrightController:
     def start_session(self, pw):
         self.browser = pw.chromium.launch(headless=True,
                                           args=self.chrome_args,
-                                          executable_path='E:\Programs\Development\PlaywrightBrowsers\chromium-1060\chrome-win\chrome.exe',
+                                        #   executable_path='E:\Programs\Development\PlaywrightBrowsers\chromium-1060\chrome-win\chrome.exe',
                                           timeout=self.TIMEOUT)
 
         self.page = self.browser.new_page()
@@ -67,12 +67,12 @@ class PlaywrightController:
 
     def download_track(self, track):
         self.page.goto(track['download_url'], timeout=self.TIMEOUT)
-        self.page.wait_for_load_state('networkidle')
+        self.page.wait_for_load_state('networkidle', timeout=self.TIMEOUT)
         button = self.page.get_by_text("Скачать")
 
         if (button):
             with self.page.expect_download(timeout=self.TIMEOUT) as download_info:
-                button.click()
+                button.click(timeout=self.TIMEOUT)
 
         download = download_info.value
         extension = download.suggested_filename.split('.')[-1]
